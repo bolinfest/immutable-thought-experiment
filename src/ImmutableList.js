@@ -7,13 +7,11 @@ type List<T> = ImmutableList<T>;
  * The idea is that this should be set to true when developing,
  * but set to false (ideally at compile time) for production.
  */
-export const VERIFY_INVARIANTS = true;
+const VERIFY_INVARIANTS = true;
 
-export const __FROZEN_MARKER__ = '__not-mutable-FROZEN_MARKER__';
+const SUPPORTS_FROZEN = typeof Object.isFrozen === 'function';
 
-export const SUPPORTS_FROZEN = typeof Object.isFrozen === 'function';
-
-const EMPTY_LIST = (SUPPORTS_FROZEN && VERIFY_INVARIANTS) ? Object.freeze([]) : [];
+const EMPTY_LIST = _freeze([]);
 
 /**
  * If you have:
@@ -38,7 +36,7 @@ const EMPTY_LIST = (SUPPORTS_FROZEN && VERIFY_INVARIANTS) ? Object.freeze([]) : 
  * to false.
  */
 export function claim<T>(array: Array<T>): List<T> {
-  return ((_freeze(array): any): List<T>);
+  return (_freeze(array): any);
 }
 
 /**
@@ -67,21 +65,19 @@ export function copyOf<T>(array: Array<T>): List<T> {
  * Returns a new Array with the contents of the specified ImmutableList.
  */
 export function toArray<T>(list: List<T>): Array<T> {
-  return ((list.slice(): any): Array<T>);
+  return (list.slice(): any);
 }
 
-export function _freeze<T>(item: T): T {
-  if (!VERIFY_INVARIANTS) {
-    return item;
-  }
-
-  if (SUPPORTS_FROZEN) {
+/**
+ * Freezes the item, if appropriate.
+ *
+ * This function is designed so that it can be inlined by an optimizing
+ * compiler if VERIFY_INVARIANTS is false.
+ */
+function _freeze<T>(item: T): T {
+  if (VERIFY_INVARIANTS && SUPPORTS_FROZEN) {
     return Object.freeze(item);
   } else {
-    // Add private property to symbolize frozen-ness.
-    // This does not actually enforce immutability as freeze() does.
-    // $FlowFixMe
-    item[__FROZEN_MARKER__] = undefined;
     return item;
   }
 }

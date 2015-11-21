@@ -56,11 +56,3 @@ declare class ImmutableList<T> {
     initialValue?: U,
   ): U;
 }
-
-/**
- * Builder for an ImmutableList. This can only be passed to build() once.
- *
- * Note that it has no public methods of its own: it can only be passed as
- * an argument to functions in ImmutableList.js.
- */
-declare class ImmutableList$Builder<T> {};
