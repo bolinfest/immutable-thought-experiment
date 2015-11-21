@@ -2,17 +2,16 @@
 /* @flow */
 
 type List<T> = ImmutableList<T>;
-type Builder<T> = ImmutableList$Builder<T>;
 
 /**
  * The idea is that this should be set to true when developing,
  * but set to false (ideally at compile time) for production.
  */
-const VERIFY_INVARIANTS = true;
+export const VERIFY_INVARIANTS = true;
 
-const __FROZEN_MARKER__ = '__not-mutable-FROZEN_MARKER__';
+export const __FROZEN_MARKER__ = '__not-mutable-FROZEN_MARKER__';
 
-const SUPPORTS_FROZEN = typeof Object.isFrozen === 'function';
+export const SUPPORTS_FROZEN = typeof Object.isFrozen === 'function';
 
 const EMPTY_LIST = (SUPPORTS_FROZEN && VERIFY_INVARIANTS) ? Object.freeze([]) : [];
 
@@ -58,67 +57,7 @@ export function copyOf<T>(array: Array<T>): List<T> {
   }
 }
 
-export function newBuilder<T>(): Builder<T> {
-  return (([]: any): Builder);
-}
-
-export function newBuilderFromImmutableList<T>(
-  list: List<T>,
-): Builder<T> {
-  return ((list.slice(): any): Builder<T>);
-}
-
-export function add<T>(builder: Builder<T>, ...items: Array<T>) {
-  _assertNotBuilt(builder);
-
-  // It should be possible to teach a whole program optimizer
-  // to inline a call like this:
-  //
-  //   add(builder, 'one', 'two', 'three')
-  //
-  // as:
-  //
-  //   assertNotBuilt(builder);
-  //   builder.push('one', 'two', 'three');
-  //
-  // because the context for `push` matches the first arg to apply().
-  _BuilderAsArray(builder).push.apply(builder, items);
-}
-
-export function addAll<T>(builder: Builder<T>, items: Iterable<T>) {
-  _assertNotBuilt(builder);
-  for (const item of items) {
-    _BuilderAsArray(builder).push(item);
-  }
-}
-
-export function build<T>(builder: Builder<T>): List<T> {
-  _assertNotBuilt(builder);
-  return ((_freeze(builder): any): List<T>);
-}
-
-function _BuilderAsArray<T>(builder: Builder<T>): Array<T> {
-  return ((builder: any): Array<T>);
-}
-
-function _assertNotBuilt<T>(builder: Builder<T>): void {
-  if (!VERIFY_INVARIANTS) {
-    return;
-  }
-
-  let violatesInvariant;
-  if (SUPPORTS_FROZEN) {
-    violatesInvariant = Object.isFrozen(builder);
-  } else {
-    violatesInvariant = builder.hasOwnProperty(__FROZEN_MARKER__);
-  }
-
-  if (violatesInvariant) {
-    throw new Error(`build() has already been invoked for ${builder}`);
-  }
-}
-
-function _freeze<T>(item: T): T {
+export function _freeze<T>(item: T): T {
   if (!VERIFY_INVARIANTS) {
     return item;
   }
