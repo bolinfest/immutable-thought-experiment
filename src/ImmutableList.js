@@ -20,8 +20,8 @@ const EMPTY_LIST = (SUPPORTS_FROZEN && VERIFY_INVARIANTS) ? Object.freeze([]) : 
  *
  *   const array = [1, 2, 3, 4];
  *
- * and you are certain that no one else has a reference to this
- * Array such that they can mutate it, then you may want to type it
+ * and you are certain that no one else has (or will have) a reference
+ * to this Array such that they can mutate it, then you may want to type it
  * as an ImmutableList to avoid making a copy. This function
  * makes it so that you can do this in one line without any funny
  * Flow annotations:
