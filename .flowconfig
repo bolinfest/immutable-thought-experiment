@@ -1,5 +1,6 @@
 [libs]
 ./node_modules/nuclide-external-interfaces/1.0/jasmine.js
+./src/types.js
 
 [options]
 suppress_comment=.*\\$FlowFixMe.*

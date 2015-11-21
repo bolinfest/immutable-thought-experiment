@@ -5,11 +5,24 @@ import {
   add,
   addAll,
   build,
+  fromLoneReference,
   newBuilder,
   newBuilderFromImmutableList,
 } from '../src/ImmutableList';
 
 describe('ImmutableList.Builder', () => {
+  it('type cast ImmutableList', () => {
+    const array = ['one', 'two', 'three'];
+    const list: ImmutableList<string> = (array: any);
+    expect(list).toEqual(['one', 'two', 'three']);
+  });
+
+  it('Use fromLoneReference() to type cast ImmutableList', () => {
+    const array = ['one', 'two', 'three'];
+    const list = fromLoneReference(array);
+    expect(list).toEqual(Object.freeze(['one', 'two', 'three']));
+  });
+
   it('Empty ImmutableList via newBuilder()', () => {
     const builder = newBuilder();
     const list = build(builder);

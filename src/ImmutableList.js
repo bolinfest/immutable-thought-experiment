@@ -1,10 +1,8 @@
 'use babel';
 /* @flow */
 
-import type {
-  ImmutableList as List,
-  ImmutableList$Builder as Builder,
-} from './types';
+type List<T> = ImmutableList<T>;
+type Builder<T> = ImmutableList$Builder<T>;
 
 /**
  * The idea is that this should be set to true when developing,
@@ -13,6 +11,32 @@ import type {
 const VERIFY_INVARIANTS = true;
 
 const __FROZEN_MARKER__ = '__not-mutable-FROZEN_MARKER__';
+
+/**
+ * If you have:
+ *
+ *   const array = [1, 2, 3, 4];
+ *
+ * and you are certain that no one else has a reference to this
+ * Array such that they can mutate it, then you may want to type it
+ * as an ImmutableList to avoid making a copy. This function
+ * makes it so that you can do this in one line without any funny
+ * Flow annotations:
+ *
+ *   const list = fromLoneReference(array);
+ *
+ * Many would consider this cleaner than doing:
+ *
+ *   const list: ImmutableList<number> = (reference: any);
+ *
+ * Although fromLoneReference() introduces an extra function call (which
+ * is already cheap), a decent whole-program optimizing compiler should
+ * be able to strip it if the output is built with VERIFY_INVARIANTS set
+ * to false.
+ */
+export function fromLoneReference<T>(array: Array<T>): List<T> {
+  return ((_freeze(array): any): List<T>);
+}
 
 export function newBuilder<T>(): Builder<T> {
   return (([]: any): Builder);
