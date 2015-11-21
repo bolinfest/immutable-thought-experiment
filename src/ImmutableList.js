@@ -26,18 +26,18 @@ const EMPTY_LIST = (SUPPORTS_FROZEN && VERIFY_INVARIANTS) ? Object.freeze([]) : 
  * makes it so that you can do this in one line without any funny
  * Flow annotations:
  *
- *   const list = fromLoneReference(array);
+ *   const list = claim(array);
  *
  * Many would consider this cleaner than doing:
  *
  *   const list: ImmutableList<number> = (reference: any);
  *
- * Although fromLoneReference() introduces an extra function call (which
+ * Although claim() introduces an extra function call (which
  * is already cheap), a decent whole-program optimizing compiler should
  * be able to strip it if the output is built with VERIFY_INVARIANTS set
  * to false.
  */
-export function fromLoneReference<T>(array: Array<T>): List<T> {
+export function claim<T>(array: Array<T>): List<T> {
   return ((_freeze(array): any): List<T>);
 }
 
@@ -51,7 +51,7 @@ export function fromLoneReference<T>(array: Array<T>): List<T> {
  * does. This is intentional because it simplifies type-checking.
  * If you want to map an Iterable and use the results as an ImmutableList,
  * then use Array.from() to do the mapping and then pass the result
- * directly to fromLoneReference().
+ * directly to claim().
  */
 export function copyOf<T>(array: Array<T>): List<T> {
   if (array.length === 0) {
@@ -59,7 +59,7 @@ export function copyOf<T>(array: Array<T>): List<T> {
   } else if (SUPPORTS_FROZEN && Object.isFrozen(array)) {
     return (array: any);
   } else {
-    return fromLoneReference(array.slice());
+    return claim(array.slice());
   }
 }
 

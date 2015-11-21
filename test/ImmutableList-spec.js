@@ -3,15 +3,15 @@
 
 import {
   copyOf,
-  fromLoneReference,
+  claim,
   toArray,
 } from '../src/ImmutableList';
 
 describe('ImmutableList', () => {
-  describe('fromLoneReference()', () => {
+  describe('claim()', () => {
     it('use to type cast ImmutableList', () => {
       const array = ['one', 'two', 'three'];
-      const list = fromLoneReference(array);
+      const list = claim(array);
       expect(list).toEqual(Object.freeze(['one', 'two', 'three']));
     });
   });
@@ -41,7 +41,7 @@ describe('ImmutableList', () => {
 
   describe('toArray()', () => {
     it('modifying the result of toArray() should not affect the original ImmutableList', () => {
-      const list = fromLoneReference(['one', 'two', 'three']);
+      const list = claim(['one', 'two', 'three']);
       const array = toArray(list);
       array.sort();
       expect(list).toEqual(Object.freeze(['one', 'two', 'three']));
@@ -58,13 +58,13 @@ describe('Some code to exercise Flow', () => {
   });
 
   it('Ensure that ImmutableList is numerically indexable.', () => {
-    const list = fromLoneReference(['one', 'two', 'three']);
+    const list = claim(['one', 'two', 'three']);
     const item = list[1];
     expect(item).toBe('two');
   });
 
   it('Ensure that ImmutableList is Iterable', () => {
-    const list = fromLoneReference(['one', 'two', 'three']);
+    const list = claim(['one', 'two', 'three']);
     const array = [];
     for (const item of list) {
       array.push(item);
