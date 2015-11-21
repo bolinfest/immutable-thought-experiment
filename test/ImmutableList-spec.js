@@ -7,12 +7,6 @@ import {
 } from '../src/ImmutableList';
 
 describe('ImmutableList', () => {
-  it('type cast ImmutableList', () => {
-    const array = ['one', 'two', 'three'];
-    const list: ImmutableList<string> = (array: any);
-    expect(list).toEqual(['one', 'two', 'three']);
-  });
-
   it('Use fromLoneReference() to type cast ImmutableList', () => {
     const array = ['one', 'two', 'three'];
     const list = fromLoneReference(array);
@@ -44,6 +38,12 @@ describe('ImmutableList', () => {
 });
 
 describe('Some code to exercise Flow', () => {
+  it('type cast ImmutableList', () => {
+    const array = ['one', 'two', 'three'];
+    const list: ImmutableList<string> = (array: any);
+    expect(list).toEqual(['one', 'two', 'three']);
+  });
+
   it('Ensure that ImmutableList is numerically indexable.', () => {
     const list = fromLoneReference(['one', 'two', 'three']);
     const item = list[1];
