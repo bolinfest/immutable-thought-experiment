@@ -4,7 +4,7 @@
  * It is not appropriate to test an instance of this class with Array.isArray().
  */
 declare class ImmutableList<T> {
-  [key: number]: T;
+  [key: number]: T; // readonly
 
   length: number; // readonly
   @@iterator(): Iterator<T>;
