@@ -54,6 +54,15 @@ describe('Some code to exercise Flow', () => {
     const item = list[1];
     expect(item).toBe('two');
   });
+
+  it('Ensure that ImmutableList is Iterable', () => {
+    const list = fromLoneReference(['one', 'two', 'three']);
+    const array = [];
+    for (const item of list) {
+      array.push(item);
+    }
+    expect(array).toEqual(['one', 'two', 'three']);
+  });
 });
 
 describe('ImmutableList$Builder', () => {
