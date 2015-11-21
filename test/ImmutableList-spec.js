@@ -11,7 +11,7 @@ import {
   newBuilderFromImmutableList,
 } from '../src/ImmutableList';
 
-describe('ImmutableList.Builder', () => {
+describe('ImmutableList', () => {
   it('type cast ImmutableList', () => {
     const array = ['one', 'two', 'three'];
     const list: ImmutableList<string> = (array: any);
@@ -46,7 +46,9 @@ describe('ImmutableList.Builder', () => {
       expect(list).toEqual(Object.freeze(['one', 'two', 'three']));
     });
   });
+});
 
+describe('ImmutableList$Builder', () => {
   it('Empty ImmutableList via newBuilder()', () => {
     const builder = newBuilder();
     const list = build(builder);
