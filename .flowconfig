@@ -3,4 +3,3 @@
 ./src/types.js
 
 [options]
-suppress_comment=.*\\$FlowFixMe.*
