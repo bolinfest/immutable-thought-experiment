@@ -1,11 +1,12 @@
 'use babel';
 /* @flow */
 
-import {
+import {ImmutableList as List} from '../src/main';
+const {
   claim,
   copyOf,
   toArray,
-} from '../src/ImmutableList';
+} = List;
 
 describe('ImmutableList', () => {
   describe('claim()', () => {
