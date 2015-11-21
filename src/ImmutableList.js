@@ -46,6 +46,12 @@ export function fromLoneReference<T>(array: Array<T>): List<T> {
  * This function tries to avoid allocating memory, if possible,
  * though it is often O(N) in the length of `array` in both time
  * and space.
+ *
+ * Note that this does not support an optional map function as Array.from()
+ * does. This is intentional because it simplifies type-checking.
+ * If you want to map an Iterable and use the results as an ImmutableList,
+ * then use Array.from() to do the mapping and then pass the result
+ * directly to fromLoneReference().
  */
 export function copyOf<T>(array: Array<T>): List<T> {
   if (array.length === 0) {
