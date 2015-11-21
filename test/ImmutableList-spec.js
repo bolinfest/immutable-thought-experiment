@@ -2,8 +2,8 @@
 /* @flow */
 
 import {
-  copyOf,
   claim,
+  copyOf,
   toArray,
 } from '../src/ImmutableList';
 
