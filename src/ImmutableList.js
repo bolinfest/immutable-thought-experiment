@@ -12,6 +12,10 @@ const VERIFY_INVARIANTS = true;
 
 const __FROZEN_MARKER__ = '__not-mutable-FROZEN_MARKER__';
 
+const SUPPORTS_FROZEN = typeof Object.isFrozen === 'function';
+
+const EMPTY_LIST = (SUPPORTS_FROZEN && VERIFY_INVARIANTS) ? Object.freeze([]) : [];
+
 /**
  * If you have:
  *
@@ -36,6 +40,22 @@ const __FROZEN_MARKER__ = '__not-mutable-FROZEN_MARKER__';
  */
 export function fromLoneReference<T>(array: Array<T>): List<T> {
   return ((_freeze(array): any): List<T>);
+}
+
+/**
+ * Takes an Array and returns a corresponding ImmutableList.
+ * This function tries to avoid allocating memory, if possible,
+ * though it is often O(N) in the length of `array` in both time
+ * and space.
+ */
+export function copyOf<T>(array: Array<T>): List<T> {
+  if (array.length === 0) {
+    return (EMPTY_LIST: any);
+  } else if (SUPPORTS_FROZEN && Object.isFrozen(array)) {
+    return (array: any);
+  } else {
+    return fromLoneReference(array.slice());
+  }
 }
 
 export function newBuilder<T>(): Builder<T> {
@@ -87,7 +107,7 @@ function _assertNotBuilt<T>(builder: Builder<T>): void {
   }
 
   let violatesInvariant;
-  if (typeof Object.isFrozen === 'function') {
+  if (SUPPORTS_FROZEN) {
     violatesInvariant = Object.isFrozen(builder);
   } else {
     violatesInvariant = builder.hasOwnProperty(__FROZEN_MARKER__);
@@ -103,7 +123,7 @@ function _freeze<T>(item: T): T {
     return item;
   }
 
-  if (typeof Object.freeze === 'function') {
+  if (SUPPORTS_FROZEN) {
     return Object.freeze(item);
   } else {
     // Add private property to symbolize frozen-ness.

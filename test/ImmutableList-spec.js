@@ -5,6 +5,7 @@ import {
   add,
   addAll,
   build,
+  copyOf,
   fromLoneReference,
   newBuilder,
   newBuilderFromImmutableList,
@@ -21,6 +22,29 @@ describe('ImmutableList.Builder', () => {
     const array = ['one', 'two', 'three'];
     const list = fromLoneReference(array);
     expect(list).toEqual(Object.freeze(['one', 'two', 'three']));
+  });
+
+  describe('copyOf()', () => {
+    it('is idempotent for the empty list', () => {
+      const empty1 = [];
+      const empty2 = [];
+      const list1 = copyOf(empty1);
+      const list2 = copyOf(empty2);
+      expect(list1).toBe(list2);
+    });
+
+    it('avoids a copy for a frozen array', () => {
+      const array = Object.freeze(['one', 'two', 'three']);
+      const list = copyOf(array);
+      expect(list).toBe(array);
+    });
+
+    it('performs a copy for a non-frozen, non-empty array', () => {
+      const array = ['one', 'two', 'three'];
+      const list = copyOf(array);
+      expect(list).not.toBe(array);
+      expect(list).toEqual(Object.freeze(['one', 'two', 'three']));
+    });
   });
 
   it('Empty ImmutableList via newBuilder()', () => {
