@@ -1,0 +1,13 @@
+{
+  "name": "not-mutable",
+  "version": "0.1.0",
+  "scripts": {
+    "test": "node --harmony node_modules/.bin/jasmine-node-transpiled test"
+  },
+  "dependencies": {
+    "nuclide-jasmine": "0.0.32"
+  },
+  "devDependencies": {
+    "nuclide-external-interfaces": "0.0.32"
+  }
+}
