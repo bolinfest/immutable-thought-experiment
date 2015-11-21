@@ -9,7 +9,7 @@ import {
 
 describe('ImmutableList', () => {
   describe('claim()', () => {
-    it('use to type cast ImmutableList', () => {
+    it('effectily used to type cast an Array to an ImmutableList', () => {
       const array = ['one', 'two', 'three'];
       const list = claim(array);
       expect(list).toEqual(Object.freeze(['one', 'two', 'three']));
