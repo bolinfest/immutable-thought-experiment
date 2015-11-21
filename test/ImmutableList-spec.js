@@ -48,6 +48,14 @@ describe('ImmutableList', () => {
   });
 });
 
+describe('Some code to exercise Flow', () => {
+  it('Ensure that ImmutableList is numerically indexable.', () => {
+    const list = fromLoneReference(['one', 'two', 'three']);
+    const item = list[1];
+    expect(item).toBe('two');
+  });
+});
+
 describe('ImmutableList$Builder', () => {
   it('Empty ImmutableList via newBuilder()', () => {
     const builder = newBuilder();

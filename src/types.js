@@ -4,6 +4,8 @@
  * It is not appropriate to test an instance of this class with Array.isArray().
  */
 declare class ImmutableList<T> {
+  [key: number]: T;
+
   length: number; // readonly
   @@iterator(): Iterator<T>;
   indexOf(searchElement: T, fromIndex?: number): number;
