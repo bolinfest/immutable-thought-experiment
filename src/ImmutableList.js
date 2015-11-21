@@ -63,6 +63,13 @@ export function copyOf<T>(array: Array<T>): List<T> {
   }
 }
 
+/**
+ * Returns a new Array with the contents of the specified ImmutableList.
+ */
+export function toArray<T>(list: List<T>): Array<T> {
+  return ((list.slice(): any): Array<T>);
+}
+
 export function _freeze<T>(item: T): T {
   if (!VERIFY_INVARIANTS) {
     return item;

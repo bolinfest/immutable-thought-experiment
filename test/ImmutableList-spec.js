@@ -4,6 +4,7 @@
 import {
   copyOf,
   fromLoneReference,
+  toArray,
 } from '../src/ImmutableList';
 
 describe('ImmutableList', () => {
@@ -33,6 +34,16 @@ describe('ImmutableList', () => {
       const list = copyOf(array);
       expect(list).not.toBe(array);
       expect(list).toEqual(Object.freeze(['one', 'two', 'three']));
+    });
+  });
+
+  describe('toArray()', () => {
+    it('modifying the result of toArray() should not affect the original ImmutableList', () => {
+      const list = fromLoneReference(['one', 'two', 'three']);
+      const array = toArray(list);
+      array.sort();
+      expect(list).toEqual(Object.freeze(['one', 'two', 'three']));
+      expect(array).toEqual(['one', 'three', 'two']);
     });
   });
 });
