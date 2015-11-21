@@ -2,11 +2,6 @@
 /* @flow */
 
 import {
-  copyOf,
-  fromLoneReference,
-} from '../src/ImmutableList';
-
-import {
   add,
   addAll,
   build,
