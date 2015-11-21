@@ -8,10 +8,12 @@ import {
 } from '../src/ImmutableList';
 
 describe('ImmutableList', () => {
-  it('Use fromLoneReference() to type cast ImmutableList', () => {
-    const array = ['one', 'two', 'three'];
-    const list = fromLoneReference(array);
-    expect(list).toEqual(Object.freeze(['one', 'two', 'three']));
+  describe('fromLoneReference()', () => {
+    it('use to type cast ImmutableList', () => {
+      const array = ['one', 'two', 'three'];
+      const list = fromLoneReference(array);
+      expect(list).toEqual(Object.freeze(['one', 'two', 'three']));
+    });
   });
 
   describe('copyOf()', () => {
