@@ -2,6 +2,10 @@
   "name": "not-mutable",
   "version": "0.1.0",
   "main": "src/main.js",
+  "author": {
+    "name": "Michael Bolin",
+    "url": "https://github.com/bolinfest"
+  },
   "scripts": {
     "test": "node --harmony node_modules/.bin/jasmine-node-transpiled test"
   },
