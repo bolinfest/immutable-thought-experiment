@@ -252,7 +252,7 @@ yourself using Flow. The problem is that it's really gross:
 const list = ((data: any): ImmutableList<string>);
 ```
 
-By comparison, using a helper function seems much clearer:
+By comparison, using a helper function seems much cleaner:
 
 ```js
 const list = List.claim(data);
