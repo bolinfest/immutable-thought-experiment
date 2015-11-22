@@ -213,6 +213,9 @@ directly into Flow's type system.
 The biggest danger with this library is the potential misuse of `claim()`.
 It would be helpful to create an ESLint rule or some other static analysis
 tool to help catch these issues during development, where possible.
+(Though if `array.slice()` is always implemented to return a copy-on-write
+array, then it probably makes sense to remove `claim()` from the API and use
+`copyOf()` exclusively.)
 
 Similarly, Flow provides no safety with respect to assigning values to an
 `ImmutableList`. Ideally, it would be possible to specify that the keys
