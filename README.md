@@ -1,4 +1,4 @@
-# not-mutable
+# immutable-thought-experiment
 
 Thought experiment: leveraging static typing instead of new data structures to
 enforce immutability in JavaScript with [Flow](https://github.com/facebook/flow)
@@ -42,9 +42,9 @@ system. Here is an example of our `copyOf()` function, which takes an `Array<T>`
 and returns an `ImmutableList<T>`:
 
 ```js
-import type {ImmutableList} from 'not-mutable';
+import type {ImmutableList} from 'immutable-thought-experiment';
 
-import {List} from 'not-mutable';
+import {List} from 'immutable-thought-experiment';
 
 function readAndVerifyData(): ImmutableList<string> {
   const json = fs.readFileSync('data.json', 'utf8');
@@ -72,9 +72,9 @@ be wasteful to create a copy when we know it's unnecessary?
 When this happens, we should use `claim()` instead of `copyOf()`:
 
 ```js
-import type {ImmutableList} from 'not-mutable';
+import type {ImmutableList} from 'immutable-thought-experiment';
 
-import {List} from 'not-mutable';
+import {List} from 'immutable-thought-experiment';
 import fs from 'fs';
 
 export function readData(): ImmutableList<string> {
@@ -103,9 +103,9 @@ first code sample, if `verifyData()` were updated to take an `ImmutableList`,
 then we could replace our use of `copyOf()` with `claim()` as follows:
 
 ```js
-import type {ImmutableList} from 'not-mutable';
+import type {ImmutableList} from 'immutable-thought-experiment';
 
-import {List} from 'not-mutable';
+import {List} from 'immutable-thought-experiment';
 
 function readAndVerifyData(): ImmutableList<string> {
   const json = fs.readFileSync('data.json', 'utf8');
